@@ -394,6 +394,12 @@ app.use((error, req, res, next) => {
 });
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const distPath = path.join(__dirname, "..", "dist");
+  app.use(express.static(distPath));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+
   app.listen(PORT, () => {
     console.log(`Team Task Manager running on port ${PORT}`);
   });
