@@ -29,11 +29,11 @@ if (dbPath) {
 
   if (!fs.existsSync(dbPath) && process.env.VERCEL) {
     console.log("Initializing SQLite database for Vercel runtime at", dbPath);
-    const prismaBinary = path.join(projectRoot, "node_modules", ".bin", "prisma");
-    const result = spawnSync(process.execPath, [prismaBinary, "db", "push"], {
+    const result = spawnSync("npx", ["prisma", "db", "push"], {
       cwd: projectRoot,
       env: process.env,
-      stdio: "inherit"
+      stdio: "inherit",
+      shell: true
     });
     if (result.status !== 0) {
       throw new Error("Failed to initialize SQLite database on Vercel runtime");
