@@ -21,9 +21,23 @@ function request(path, { token, method = "GET", body } = {}) {
     },
     body: body ? JSON.stringify(body) : undefined
   }).then(async (response) => {
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.message || "Request failed");
+    const text = await response.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = null;
+    }
+
+    if (!response.ok) {
+      const message = data?.message || text || response.statusText || "Request failed";
+      throw new Error(message.trim() || "Request failed");
+    }
+
     return data;
+  }).catch((error) => {
+    console.error(`API request failed for ${path}:`, error);
+    throw error;
   });
 }
 
