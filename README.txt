@@ -49,17 +49,19 @@ Role-Based Access:
 - Admins can add members or update member roles.
 - Members can create and update tasks inside projects they belong to.
 
-Railway Deployment:
+Vercel Deployment:
 1. Push this repository to GitHub.
-2. Create a new Railway project and connect the GitHub repository.
-3. Add environment variables:
-   DATABASE_URL=file:./prod.db
+2. Add environment variables in Vercel:
+   DATABASE_URL=<your-database-url>
    JWT_SECRET=use-a-long-random-secret
-4. Railway uses railway.json to run install, database push, build, and start commands.
-5. Open the generated Railway domain and test signup/login.
+3. Deploy the project on Vercel using the existing repository.
+4. Vercel will build the frontend and expose API routes under /api/* using api/[...path].js.
+5. Open the deployed Vercel URL and test signup/login.
+
+Note: For production on Vercel, use an external database connection rather than SQLite, since Vercel functions run in a read-only environment and don't preserve a local SQLite file.
 
 Submission Checklist:
-- Live Application URL: Railway public URL
+- Live Application URL: Vercel deployment URL
 - GitHub Repository Link: GitHub repo URL
 - README file: upload this README.txt file
 - Demo Video: 2 to 5 minute walkthrough showing signup/login, project creation, adding a member, creating/assigning tasks, changing status, and dashboard metrics

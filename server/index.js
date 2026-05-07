@@ -401,6 +401,10 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500).json({ message: error.message || "Something went wrong" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Team Task Manager running on port ${PORT}`);
-});
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  app.listen(PORT, () => {
+    console.log(`Team Task Manager running on port ${PORT}`);
+  });
+}
+
+export default app;
