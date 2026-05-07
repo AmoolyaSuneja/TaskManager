@@ -5,9 +5,41 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import path from "path";
 import { fileURLToPath } from "url";
+import { spawnSync } from "child_process";
+import fs from "fs";
 import { z } from "zod";
 
-process.env.DATABASE_URL ||= "file:./dev.db";
+const projectRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+if (!process.env.DATABASE_URL) {
+  if (process.env.VERCEL) {
+    const tmpDir = process.env.TMPDIR || "/tmp";
+    process.env.DATABASE_URL = `file:${path.join(tmpDir, "dev.db")}`;
+  } else {
+    process.env.DATABASE_URL = "file:./dev.db";
+  }
+}
+
+const dbPath = process.env.DATABASE_URL.startsWith("file:")
+  ? process.env.DATABASE_URL.slice(5)
+  : null;
+
+if (dbPath) {
+  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+
+  if (!fs.existsSync(dbPath) && process.env.VERCEL) {
+    console.log("Initializing SQLite database for Vercel runtime at", dbPath);
+    const prismaBinary = path.join(projectRoot, "node_modules", ".bin", "prisma");
+    const result = spawnSync(process.execPath, [prismaBinary, "db", "push"], {
+      cwd: projectRoot,
+      env: process.env,
+      stdio: "inherit"
+    });
+    if (result.status !== 0) {
+      throw new Error("Failed to initialize SQLite database on Vercel runtime");
+    }
+  }
+}
 
 const { PrismaClient } = await import("@prisma/client");
 const prisma = new PrismaClient();

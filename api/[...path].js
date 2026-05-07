@@ -1,3 +1,5 @@
 import app from "../server/index.js";
 
-export default app;
+export default async function handler(req, res) {
+  return app(req, res);
+}
