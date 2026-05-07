@@ -388,12 +388,6 @@ app.get("/api/dashboard", requireAuth, async (req, res) => {
   });
 });
 
-const distPath = path.join(__dirname, "..", "dist");
-app.use(express.static(distPath));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(distPath, "index.html"));
-});
-
 app.use((error, req, res, next) => {
   console.error(error);
   res.status(error.status || 500).json({ message: error.message || "Something went wrong" });

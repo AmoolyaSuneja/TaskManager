@@ -1,25 +1,15 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run vercel-build",
   "outputDirectory": "dist",
-  "builds": [
+  "rewrites": [
     {
-      "src": "api/[...path].js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "api/[...path].js"
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ]
 }
