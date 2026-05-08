@@ -38,8 +38,4 @@ Vercel Deployment:
    - JWT_SECRET
 4. Deploy and verify signup/login, project creation, member add, task updates, and dashboard.
 
-Submission:
-- Live URL: Vercel deployment URL
-- GitHub Repo: https://github.com/AmoolyaSuneja/TaskManager
-- README .txt: upload README.txt
-- Demo Video: 2-5 minutes
+Note : deployed using vercel due to token limit reached on railway app.
