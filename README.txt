@@ -1,67 +1,45 @@
 Team Task Manager
 
-A full-stack task management app for creating projects, adding teammates, assigning work, and tracking delivery status with Admin/Member role-based access.
+Full-stack web app where users create projects, assign tasks, and track progress with role-based access (ADMIN / MEMBER).
 
-Features:
-- Signup and login with JWT authentication
-- Project creation and project-scoped team membership
-- Admin-only member invitation and role updates
-- Task creation, assignment, priority, due date, and status tracking
-- Dashboard metrics for projects, tasks, assigned work, overdue work, and task status
+Requirement Coverage:
+- Authentication: signup and login with JWT
+- Project and team management
+- Task creation, assignment, and status tracking
+- Dashboard with task counts, status split, and overdue metrics
 - REST API with validation and relational database models
-- Railway-ready deployment configuration
+- Role-based access control for project operations
 
 Tech Stack:
 - Frontend: React + Vite
 - Backend: Node.js + Express
-- Database: SQLite with Prisma ORM
-- Auth: JWT + bcrypt password hashing
+- Database: PostgreSQL + Prisma ORM
+- Authentication: JWT + bcrypt
 - Validation: Zod
 
 Local Setup:
 1. npm install
-2. Copy .env.example to .env
+2. copy .env.example .env
 3. npm run db:push
-4. Optional demo data: npm run db:seed
-5. npm run dev
+4. npm run dev
 
-Demo Login after seeding:
-- Admin: admin@example.com
-- Member: member@example.com
-- Password: password123
+Optional demo data:
+- npm run db:seed
 
-API Overview:
-- POST /api/auth/signup
-- POST /api/auth/login
-- GET /api/me
-- GET /api/dashboard
-- GET /api/projects
-- POST /api/projects
-- GET /api/projects/:id
-- POST /api/projects/:projectId/members
-- GET /api/projects/:projectId/tasks
-- POST /api/projects/:projectId/tasks
-- PATCH /api/projects/:projectId/tasks/:taskId
-
-Role-Based Access:
-- Only authenticated users can access projects, tasks, and dashboards.
-- Users only see projects where they are members.
-- Admins can add members or update member roles.
-- Members can create and update tasks inside projects they belong to.
+Demo credentials after seed:
+- Admin: admin@example.com / password123
+- Member: member@example.com / password123
 
 Vercel Deployment:
-1. Push this repository to GitHub.
-2. Add environment variables in Vercel:
-   DATABASE_URL=<your-database-url>
-   JWT_SECRET=use-a-long-random-secret
-3. Deploy the project on Vercel using the existing repository.
-4. Vercel will build the frontend and expose API routes under /api/* using api/[...path].js.
-5. Open the deployed Vercel URL and test signup/login.
+1. Push repository to GitHub.
+2. Import project in Vercel.
+3. Add environment variables:
+   - DATABASE_URL
+   - JWT_SECRET
+4. Deploy and verify signup/login, project creation, member add, task updates, and dashboard.
 
-Note: For production on Vercel, use an external database connection rather than SQLite, since Vercel functions run in a read-only environment and don't preserve a local SQLite file.
-
-Submission Checklist:
-- Live Application URL: Vercel deployment URL
-- GitHub Repository Link: GitHub repo URL
-- README file: upload this README.txt file
-- Demo Video: 2 to 5 minute walkthrough showing signup/login, project creation, adding a member, creating/assigning tasks, changing status, and dashboard metrics
+Submission:
+- Live URL: Vercel deployment URL
+- GitHub Repo: https://github.com/AmoolyaSuneja/TaskManager
+- README .txt: upload README.txt
+- Demo Video: 2-5 minutes
